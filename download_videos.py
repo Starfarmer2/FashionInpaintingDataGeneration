@@ -2,6 +2,7 @@ from pytube import YouTube
 from concurrent.futures import ThreadPoolExecutor
 
 VIDEO_FOLDER_PATH = './raw_videos'
+MAX_WORKERS = 5
 
 
 def download_video(videoID):
@@ -16,5 +17,5 @@ def download_video(videoID):
 
 videoIDs = ['K1trspBhXKs', 'nJnSuHHPmNs', 'ztNEDLmeJC0']
 
-with ThreadPoolExecutor(max_workers=5) as executor:
+with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
     executor.map(download_video, videoIDs)
