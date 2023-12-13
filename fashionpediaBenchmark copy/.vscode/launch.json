@@ -1,0 +1,56 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Launch Fashionpedia Inference with Spinenet-143",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/models/official/detection/inference_fashionpedia.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--model=attribute_mask_rcnn",
+                "--image_size=1024", 
+                "--checkpoint_path=${workspaceFolder}/models/official/detection/projects/fashionpedia/checkpoints/fashionpedia-spinenet-143/model.ckpt",
+                "--label_map_file=${workspaceFolder}/models/official/detection/projects/fashionpedia/dataset/fashionpedia_label_map.csv", 
+                "--image_file_pattern=${workspaceFolder}/models/official/detection/projects/fashionpedia/images/train/*.jpg",
+                "--output_html=${workspaceFolder}/models/official/detection/projects/fashionpedia/output/outSpine.html", 
+                "--max_boxes_to_draw=15", 
+                "--min_score_threshold=0.8",
+                "--config_file=${workspaceFolder}/models/official/detection/projects/fashionpedia/configs/yaml/spinenet143_amrcnn.yaml", 
+                "--output_file=${workspaceFolder}/models/official/detection/projects/fashionpedia/output/outputSpine.npy"
+            ]
+
+        },
+        {
+            "name": "Launch Fashionpedia Inference with Resnet-101-fpn",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/models/official/detection/inference_fashionpedia.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--model=attribute_mask_rcnn",
+                "--image_size=1024", 
+                "--checkpoint_path=${workspaceFolder}/models/official/detection/projects/fashionpedia/checkpoints/fashionpedia-r101-fpn/model.ckpt",
+                "--label_map_file=${workspaceFolder}/models/official/detection/projects/fashionpedia/dataset/fashionpedia_label_map.csv", 
+                "--image_file_pattern=${workspaceFolder}/models/official/detection/projects/fashionpedia/images/train/*.jpg",
+                "--output_html=${workspaceFolder}/models/official/detection/projects/fashionpedia/output/outRes.html", 
+                "--max_boxes_to_draw=15", 
+                "--min_score_threshold=0.8",
+                "--config_file=${workspaceFolder}/models/official/detection/projects/fashionpedia/configs/yaml/r101fpn_amrcnn.yaml", 
+                "--output_file=${workspaceFolder}/models/official/detection/projects/fashionpedia/output/outputRes.npy"
+            ]
+
+        }
+
+    ]
+}

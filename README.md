@@ -7,7 +7,7 @@
 ### 2. Python Packages
 * Change directory to ./fashionpediaBenchmark
 * Run `pip install -r requirements.txt`
-
+d
 ### 3. Set Python Path
 * Set path to python in `image_segmentation.py`
 
