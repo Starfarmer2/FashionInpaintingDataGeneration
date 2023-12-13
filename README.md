@@ -8,5 +8,27 @@
 * Change directory to ./fashionpediaBenchmark
 * Run `pip install -r requirements.txt`
 
+### 3. Set Python Path
+* Set path to python in `image_segmentation.py`
+
+## Running Pipeline
+### 1. Download YouTube Videos
+* Add YouTube video IDs to `videoID` list in `download_videos.py`
+* Set the number of parallel downloads with `MAX_WORKERS`
+* Run script
+
+### 2. Extract Frames From Videos
+* Set seconds between consecutive frames with `FRAME_INTERVAL` and time of first frame with `START_TIME` in `extract_frames.py`
+* Run script
+
+### 3. Image Segmentation Using Fashionpedia Baseline Model
+* Run `image_segmentation.py`
+
+### 4. Generate Dataset
+* Run `generate_dataset.py`
+
 ## Notes
-* 
+* `download_videos.py` downloads the highest quality available for each video
+* The segmentation model uses SpineNet143, largest model available for Fashionpedia baseline model
+* Every garment recognized during segmentation phase is used as the target once
+* Segmented garments are paired with the first appearing segmented garment of the same category from the next consecutive frame of the same video (It is often the case that the same piece of garment is paired with itself in the next frame)
