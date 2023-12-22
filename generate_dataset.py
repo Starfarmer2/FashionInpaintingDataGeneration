@@ -41,8 +41,18 @@ def match_pairs(list1, list2):
                 break
     return matched_pairs
 
+# Cropped target
+# 
+# Shortened frame extraction interval
+# Increased segmentation threshold probability
+# Reworked frame naming to ensure proper frame order
+# Sorted segmentation results based on frame file name
+
 
 segmentations = np.load('./segmentation_output/output.npy', allow_pickle=True)
+
+# Sort segmentations based on outputs
+segmentations = sorted(segmentations, key = lambda e:e['image_file'])
 
 datapoint_count = 1
 for idx, segmentation in enumerate(segmentations):
@@ -74,9 +84,10 @@ for idx, segmentation in enumerate(segmentations):
         datapoint_path = os.path.join(DATASET_PATH, f'{datapoint_count:0>{DATAPOINT_PATH_WIDTH}}')
         os.makedirs(datapoint_path, exist_ok=True)
 
-        # Mask image 1
+        # Mask and crop image 1
         mask_rle = rle_decode(mask)
         masked_image = apply_mask_pil(raw_image, mask_rle)
+        masked_image = masked_image.crop((box[1],box[0],box[3],box[2]))
 
         # Remove box from image 2
         boxed_image = next_raw_image.copy()
@@ -100,9 +111,10 @@ for idx, segmentation in enumerate(segmentations):
         datapoint_path = os.path.join(DATASET_PATH, f'{datapoint_count:0>{DATAPOINT_PATH_WIDTH}}')
         os.makedirs(datapoint_path, exist_ok=True)
 
-        # Mask image 2
+        # Mask and crop image 2
         mask_rle = rle_decode(next_mask)
         masked_image = apply_mask_pil(next_raw_image, mask_rle)
+        masked_image = masked_image.crop((next_box[1],next_box[0],next_box[3],next_box[2]))
 
         # Remove box from image 1
         boxed_image = raw_image.copy()

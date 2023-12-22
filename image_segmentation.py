@@ -3,6 +3,8 @@ import glob
 
 PYTHON_PATH = 'python3.9'
 
+PROBABILITY_THRESHOLD = 0.6
+
 INFERENCE_PATH = 'inference_fashionpedia.py'
 CHECKPOINT_PATH = '../../../../fashionpedia-spinenet-143/model.ckpt'
 LABELMAP_PATH = 'projects/fashionpedia/dataset/fashionpedia_label_map.csv'
@@ -33,5 +35,5 @@ output_html_path = os.path.join(OUTPUT_FOLDER_PATH, 'out.html')
 output_file_path = os.path.join(OUTPUT_FOLDER_PATH, 'output.npy')
 
 os.chdir('./fashionpediaBenchmark/models/official/detection')
-os.system(f'{PYTHON_PATH} {INFERENCE_PATH} --model="attribute_mask_rcnn" --image_size="512" --checkpoint_path="{CHECKPOINT_PATH}"  --label_map_file="{LABELMAP_PATH}" --image_file_pattern="{image_file_pattern}" --output_html="{output_html_path}" --config_file="{CONFIG_PATH}" --output_file="{output_file_path}"')
+os.system(f'{PYTHON_PATH} {INFERENCE_PATH} --model="attribute_mask_rcnn" --min_score_threshold={PROBABILITY_THRESHOLD} --image_size="512" --checkpoint_path="{CHECKPOINT_PATH}"  --label_map_file="{LABELMAP_PATH}" --image_file_pattern="{image_file_pattern}" --output_html="{output_html_path}" --config_file="{CONFIG_PATH}" --output_file="{output_file_path}"')
 os.chdir('../../../..')

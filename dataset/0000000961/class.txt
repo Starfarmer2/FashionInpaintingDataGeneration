@@ -1,1 +1,1 @@
-shirt, blouse
+top, t-shirt, sweatshirt

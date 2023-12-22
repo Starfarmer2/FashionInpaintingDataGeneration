@@ -15,7 +15,7 @@ def download_video(videoID):
     except Exception as e:
         print(f"Failed to download {url}: {e}")
 
-videoIDs = ['K1trspBhXKs', 'nJnSuHHPmNs', 'ztNEDLmeJC0']
+videoIDs = ['K1trspBhXKs']
 
 with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
     executor.map(download_video, videoIDs)

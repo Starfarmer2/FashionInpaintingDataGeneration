@@ -4,10 +4,11 @@ import cv2
 import json
 from PIL import Image
 
+VIDEOFRAME_PATH_WIDTH = 10
 
 VIDEO_FOLDER_PATH = './raw_videos'
 FRAME_FOLDER_PATH = './video_frames'
-FRAME_INTERVAL = 0.3  # Seconds between frames extracted from videos
+FRAME_INTERVAL = 0.15  # Seconds between frames extracted from videos
 
 START_TIME = 1.0  # When to start extracting
 
@@ -48,16 +49,17 @@ for video_path in video_paths:
     # Extract frames
     frame_rate = cap.get(cv2.CAP_PROP_FPS)
     count = 0
-
+    filename_cnt = 0
     while cap.isOpened():
         ret, frame = cap.read()
         if not ret:
             break
 
         if count % int(frame_rate * FRAME_INTERVAL) == 0 and count/frame_rate >= START_TIME:
-            frame_filename = os.path.join(frame_path_for_video, f"{count}.jpg")
+            frame_filename = os.path.join(frame_path_for_video, f"{filename_cnt:0>{VIDEOFRAME_PATH_WIDTH}}.jpg")
             cv2.imwrite(frame_filename, frame)
             print(f"Saved {frame_filename}")
+            filename_cnt += 1
 
         count += 1
 
