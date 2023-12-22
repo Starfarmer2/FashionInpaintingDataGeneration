@@ -42,7 +42,6 @@ def match_pairs(list1, list2):
     return matched_pairs
 
 # Cropped target
-# 
 # Shortened frame extraction interval
 # Increased segmentation threshold probability
 # Reworked frame naming to ensure proper frame order
