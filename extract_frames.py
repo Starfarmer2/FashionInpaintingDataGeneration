@@ -6,14 +6,16 @@ from PIL import Image
 
 VIDEOFRAME_PATH_WIDTH = 10
 
-VIDEO_FOLDER_PATH = './raw_videos'
-FRAME_FOLDER_PATH = './video_frames'
-FRAME_INTERVAL = 0.15  # Seconds between frames extracted from videos
+# VIDEO_FOLDER_PATH = './raw_videos'
+# FRAME_FOLDER_PATH = './video_frames'
+VIDEO_FOLDER_PATH = './raw_videos/drive_videos'
+FRAME_FOLDER_PATH = './video_frames/drive_frames'
+FRAME_INTERVAL = 0.25  # Seconds between frames extracted from videos
 
 START_TIME = 1.0  # When to start extracting
 
 def list_video_files(directory):
-    extensions = ['*.mp4']
+    extensions = ['*.mp4','*.MOV']
     video_files = []
 
     for ext in extensions:

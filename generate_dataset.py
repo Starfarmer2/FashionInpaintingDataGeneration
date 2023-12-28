@@ -7,11 +7,16 @@ import pandas as pd
 from pycocotools import mask as coco_mask
 
 
-DATASET_PATH = './dataset'
+# DATASET_PATH = './dataset'
+DATASET_PATH = './dataset/drive_dataset'
 DATAPOINT_PATH_WIDTH = 10
+
+SHIRT_ONLY = True
 
 LABEL_CSV_PATH = './fashionpediaBenchmark/models/official/detection/projects/fashionpedia/dataset/fashionpedia_label_map.csv'
 
+# Labels for shirts only
+allowed_labels = [1, 2, 3, 4, 5, 6, 10, 29, 32]
 
 # Decode mask into 2d array
 def rle_decode(mask):
@@ -35,7 +40,7 @@ def match_pairs(list1, list2):
         class_label1 = item1[0]
         for item2 in list2:
             class_label2 = item2[0]
-            if class_label1 == class_label2:
+            if class_label1 == class_label2 and (not SHIRT_ONLY or class_label1 in allowed_labels):
                 matched_pairs.append((item1, item2))
                 list2.remove(item2)
                 break
@@ -71,13 +76,13 @@ for idx, segmentation in enumerate(segmentations):
     raw_image = Image.open(f'./video_frames/{videoID}/{image_name}')
     next_raw_image = Image.open(f'./video_frames/{next_videoID}/{next_image_name}')
     
-    garment_list = list(zip(segmentation['classes'], segmentation['boxes'], segmentation['masks']))
-    next_garment_list = list(zip(next_segmentation['classes'], next_segmentation['boxes'], next_segmentation['masks']))
+    garment_list = list(zip(segmentation['classes'], segmentation['boxes'], segmentation['masks'], segmentation['attributes']))
+    next_garment_list = list(zip(next_segmentation['classes'], next_segmentation['boxes'], next_segmentation['masks'], next_segmentation['attributes']))
     matched_pairs = match_pairs(garment_list, next_garment_list)
 
     for matched_pair in matched_pairs:
-        (class_label, box, mask) = matched_pair[0]
-        (next_class_label, next_box, next_mask) = matched_pair[1]
+        (class_label, box, mask, attribute) = matched_pair[0]
+        (next_class_label, next_box, next_mask, next_attribute) = matched_pair[1]
 
         # Create datapoint
         datapoint_path = os.path.join(DATASET_PATH, f'{datapoint_count:0>{DATAPOINT_PATH_WIDTH}}')
@@ -101,6 +106,8 @@ for idx, segmentation in enumerate(segmentations):
         with open(os.path.join(datapoint_path, f'class.txt'), 'w') as file:
             df = pd.read_csv(LABEL_CSV_PATH, sep=':', header=None)
             file.write(df[df[0] == class_label][1].item())
+
+        np.save(os.path.join(datapoint_path, f'attributes.npy'), next_attribute)
 
         datapoint_count += 1
 
@@ -127,6 +134,7 @@ for idx, segmentation in enumerate(segmentations):
         with open(os.path.join(datapoint_path, f'class.txt'), 'w') as file:
             df = pd.read_csv(LABEL_CSV_PATH, sep=':', header=None)
             file.write(df[df[0] == class_label][1].item())
+        np.save(os.path.join(datapoint_path, f'attributes.npy'), attribute)
 
         datapoint_count += 1    
 

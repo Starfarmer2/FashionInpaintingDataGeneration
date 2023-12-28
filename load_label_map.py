@@ -6,5 +6,5 @@ csv_file_path = './fashionpediaBenchmark/models/official/detection/projects/fash
 df = pd.read_csv(csv_file_path, sep=':', header=None)
 
 # Now 'df' is a DataFrame containing the contents of the CSV file
-print(df.head())  # T
+print(df)  # T
 print(df[df[0] == 1][1][0])

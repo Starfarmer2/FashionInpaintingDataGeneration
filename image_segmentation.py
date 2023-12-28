@@ -16,11 +16,13 @@ OUTPUT_HTML_PATH = '../../../../segmentation_output/out.html'
 OUTPUT_FILE_PATH = '../../../../segmentation_output/output.npy'
 
 
-VIDEO_FOLDER_PATH = './raw_videos'
-FRAME_FOLDER_PATH = './video_frames'
+# VIDEO_FOLDER_PATH = './raw_videos'
+# FRAME_FOLDER_PATH = './video_frames'
+VIDEO_FOLDER_PATH = './raw_videos/drive_videos'
+FRAME_FOLDER_PATH = './video_frames/drive_videos'
 
 def list_video_files(directory):
-    extensions = ['*.mp4']
+    extensions = ['*.mp4','*.MOV']
     video_files = []
 
     for ext in extensions:
